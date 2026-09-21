@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Lambda — Curated precision hardware and peripherals for people who notice the difference." />
+  <title>Lambda — Precision Hardware</title>
+
+  <!-- Outfit font: geometric, clean, not Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS Play CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Outfit', 'sans-serif'],
+          },
+        },
+      },
+    };
+  </script>
+
+  <!-- Custom overrides: animations, drawer transitions, scrollbar -->
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body class="bg-zinc-950 text-zinc-50 font-sans antialiased min-h-screen">
+
+  <!-- ═══════════════════════════════════════════
+       NAV — Fixed, frosted glass, left-aligned brand
+       ═══════════════════════════════════════════ -->
+  <nav class="fixed top-0 inset-x-0 z-40 bg-zinc-950/80 backdrop-blur-md border-b border-zinc-800/60">
+    <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+
+      <!-- Brand wordmark -->
+      <a href="#" class="flex items-center gap-2 text-zinc-50 font-bold tracking-[0.2em] text-sm uppercase">
+        <span class="text-amber-400 text-xl leading-none">λ</span>
+        Lambda
+      </a>
+
+      <!-- Nav links (desktop) -->
+      <div class="hidden md:flex items-center gap-8">
+        <a href="#products" class="text-zinc-400 hover:text-zinc-50 text-sm font-medium transition-colors duration-150">Catalog</a>
+        <a href="#"         class="text-zinc-400 hover:text-zinc-50 text-sm font-medium transition-colors duration-150">About</a>
+        <a href="#"         class="text-zinc-400 hover:text-zinc-50 text-sm font-medium transition-colors duration-150">Support</a>
+      </div>
+
+      <!-- Cart toggle -->
+      <button
+        id="cart-toggle"
+        class="relative flex items-center gap-2 text-zinc-400 hover:text-zinc-50 transition-colors duration-150 py-2 pl-2"
+        aria-label="Open shopping cart"
+      >
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <path d="M16 10a4 4 0 01-8 0"/>
+        </svg>
+        <span class="text-sm font-medium">Cart</span>
+        <!-- Badge (hidden when count is 0) -->
+        <span
+          id="cart-badge"
+          class="hidden absolute -top-0.5 left-4 bg-amber-400 text-zinc-950 text-xs font-bold w-5 h-5 items-center justify-center rounded-full"
+          aria-live="polite"
+        >0</span>
+      </button>
+
+    </div>
+  </nav>
+
+
+  <!-- ═══════════════════════════════════════════
+       HERO — 50/50 split: editorial left | mosaic right
+       ═══════════════════════════════════════════ -->
+  <section id="hero" class="min-h-screen grid grid-cols-1 lg:grid-cols-2 pt-16">
+
+    <!-- Left: Editorial copy -->
+    <div class="flex flex-col justify-center px-8 lg:px-16 xl:px-20 py-20">
+
+      <!-- Eyebrow label -->
+      <div class="flex items-center gap-3 mb-8">
+        <div class="w-8 h-px bg-amber-400"></div>
+        <span class="text-amber-400 text-xs font-semibold tracking-[0.3em] uppercase">Precision Hardware — 2026</span>
+      </div>
+
+      <!-- H1: controlled hierarchy via weight + color -->
+      <h1 class="text-5xl lg:text-6xl xl:text-[4.5rem] font-bold text-zinc-50 leading-[1.05] mb-6">
+        Tools built<br/>
+        for people<br/>
+        <span class="text-zinc-500 font-light">who notice.</span>
+      </h1>
+
+      <p class="text-zinc-400 text-lg max-w-md mb-10 leading-relaxed">
+        Curated hardware and peripherals — chosen for build quality and tactile
+        precision, not brand recognition. Ships within 3 working days.
+      </p>
+
+      <!-- CTAs -->
+      <div class="flex flex-col sm:flex-row items-start gap-4">
+        <a
+          href="#products"
+          class="inline-flex items-center gap-3 bg-amber-400 text-zinc-950 font-semibold text-sm px-8 py-4 hover:bg-amber-300 transition-colors"
+        >
+          Browse the catalog
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </a>
+        <span class="inline-flex items-center text-zinc-500 text-sm py-4">
+          Free shipping on orders over \$200
+        </span>
+      </div>
+
+      <!-- Stats row -->
+      <div class="flex items-center gap-8 mt-16 pt-8 border-t border-zinc-800">
+        <div>
+          <p class="text-zinc-50 font-bold text-2xl tabular-nums">94.7%</p>
+          <p class="text-zinc-600 text-xs mt-0.5 font-medium">Customer satisfaction</p>
+        </div>
+        <div class="w-px h-8 bg-zinc-800"></div>
+        <div>
+          <p class="text-zinc-50 font-bold text-2xl tabular-nums">3 days</p>
+          <p class="text-zinc-600 text-xs mt-0.5 font-medium">Avg. delivery time</p>
+        </div>
+        <div class="w-px h-8 bg-zinc-800"></div>
+        <div>
+          <p class="text-zinc-50 font-bold text-2xl tabular-nums">2-yr</p>
+          <p class="text-zinc-600 text-xs mt-0.5 font-medium">Warranty on all items</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: 2×2 image mosaic (sticky, visible desktop only) -->
+    <div class="hidden lg:grid grid-cols-2 bg-zinc-900 lg:h-screen lg:sticky lg:top-0">
+      <div class="overflow-hidden border-b border-r border-zinc-800">
+        <img src="https://picsum.photos/seed/lambda-h1/700/700" alt="" class="w-full h-full object-cover hover:scale-105 transition-transform duration-700" loading="eager" />
+      </div>
+      <div class="overflow-hidden border-b border-zinc-800">
+        <img src="https://picsum.photos/seed/lambda-h2/700/700" alt="" class="w-full h-full object-cover hover:scale-105 transition-transform duration-700" loading="eager" />
+      </div>
+      <div class="overflow-hidden border-r border-zinc-800">
+        <img src="https://picsum.photos/seed/lambda-h3/700/700" alt="" class="w-full h-full object-cover hover:scale-105 transition-transform duration-700" loading="eager" />
+      </div>
+      <!-- Bottom-right: brand tile -->
+      <div class="flex flex-col items-center justify-center bg-zinc-950 p-8 text-center">
+        <span class="text-amber-400 text-6xl font-bold mb-3 leading-none">λ</span>
+        <p class="text-zinc-400 text-xs font-semibold tracking-[0.3em] uppercase">Lambda</p>
+        <p class="text-zinc-700 text-xs mt-4 leading-relaxed max-w-[120px]">
+          Curated hardware since 2024
+        </p>
+      </div>
+    </div>
+
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════
+       PRODUCTS — asymmetric masonry grid
+       ═══════════════════════════════════════════ -->
+  <section id="products" class="max-w-7xl mx-auto px-6 py-24">
+
+    <!-- Section header -->
+    <div class="flex flex-col sm:flex-row sm:items-end justify-between mb-12 gap-4">
+      <div>
+        <div class="flex items-center gap-3 mb-3">
+          <div class="w-6 h-px bg-amber-400"></div>
+          <span class="text-amber-400 text-xs font-semibold tracking-[0.3em] uppercase">Full Catalog</span>
+        </div>
+        <h2 class="text-3xl font-bold text-zinc-50">Every item, in stock.</h2>
+      </div>
+      <span id="product-count" class="text-zinc-600 text-sm font-medium tabular-nums"></span>
+    </div>
+
+    <!-- Skeleton: shown while products load -->
+    <div id="products-skeleton" class="grid grid-cols-1 md:grid-cols-3 gap-4"></div>
+
+    <!-- Product grid: populated by renderProducts() in app.js -->
+    <div id="products-grid" class="hidden"></div>
+
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════
+       FOOTER
+       ═══════════════════════════════════════════ -->
+  <footer class="border-t border-zinc-800 py-12 mt-8">
+    <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6">
+      <div class="flex items-center gap-2 text-zinc-50 font-bold tracking-[0.2em] text-sm uppercase">
+        <span class="text-amber-400">λ</span> Lambda
+      </div>
+      <p class="text-zinc-700 text-xs">© 2026 Lambda. Built with precision.</p>
+      <div class="flex items-center gap-6 text-zinc-600 text-xs">
+        <a href="#" class="hover:text-zinc-300 transition-colors">Privacy</a>
+        <a href="#" class="hover:text-zinc-300 transition-colors">Terms</a>
+        <a href="#" class="hover:text-zinc-300 transition-colors">Shipping</a>
+      </div>
+    </div>
+  </footer>
+
+
+  <!-- ═══════════════════════════════════════════
+       CART OVERLAY (dim background)
+       ═══════════════════════════════════════════ -->
+  <div
+    id="cart-overlay"
+    class="fixed inset-0 bg-zinc-950/70 backdrop-blur-sm z-40 hidden"
+    aria-hidden="true"
+  ></div>
+
+
+  <!-- ═══════════════════════════════════════════
+       CART DRAWER — off-canvas, slides from right
+       ═══════════════════════════════════════════ -->
+  <aside
+    id="cart-drawer"
+    class="fixed top-0 right-0 h-full w-full max-w-md bg-zinc-900 border-l border-zinc-800 z-50 flex flex-col"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Shopping cart"
+  >
+    <!-- Drawer header -->
+    <div class="flex items-center justify-between px-6 py-5 border-b border-zinc-800 flex-shrink-0">
+      <div>
+        <h2 class="font-semibold text-zinc-50 text-lg">Your Cart</h2>
+        <p id="cart-item-count" class="text-zinc-600 text-xs mt-0.5">0 items</p>
+      </div>
+      <button
+        id="cart-close"
+        class="text-zinc-500 hover:text-zinc-50 transition-colors p-1 -mr-1"
+        aria-label="Close cart"
+      >
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M18 6L6 18M6 6l12 12"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Scrollable cart items — rendered by renderCart() -->
+    <div id="cart-items" class="flex-1 overflow-y-auto px-6 py-2"></div>
+
+    <!-- Drawer footer: totals + checkout CTA -->
+    <div class="px-6 py-5 border-t border-zinc-800 flex-shrink-0">
+      <div class="flex justify-between items-baseline mb-1">
+        <span class="text-zinc-400 text-sm">Subtotal</span>
+        <span id="cart-total" class="font-bold text-zinc-50 text-xl tabular-nums">$0.00</span>
+      </div>
+      <p class="text-zinc-700 text-xs mb-5">Shipping calculated at checkout.</p>
+      <button
+        id="checkout-open"
+        class="w-full bg-amber-400 text-zinc-950 font-semibold py-4 hover:bg-amber-300 transition-colors text-sm disabled:opacity-40 disabled:cursor-not-allowed"
+        disabled
+      >
+        Proceed to checkout
+      </button>
+      <button
+        id="cart-close-bottom"
+        class="w-full mt-2 text-zinc-600 hover:text-zinc-300 text-sm py-2 transition-colors"
+      >
+        Continue shopping
+      </button>
+    </div>
+  </aside>
+
+
+  <!-- ═══════════════════════════════════════════
+       CHECKOUT MODAL — full-screen, 2-column
+       ═══════════════════════════════════════════ -->
+  <div
+    id="checkout-modal"
+    class="hidden fixed inset-0 bg-zinc-950 z-[60] overflow-y-auto"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Checkout"
+  >
+    <!-- Sticky modal header -->
+    <div class="sticky top-0 bg-zinc-950/90 backdrop-blur-sm border-b border-zinc-800 z-10">
+      <div class="max-w-6xl mx-auto px-6 h-14 flex items-center justify-between">
+        <span class="text-zinc-50 font-semibold text-sm flex items-center gap-2">
+          <span class="text-amber-400 text-base">λ</span>
+          Checkout
+        </span>
+        <button
+          id="checkout-modal-close"
+          class="text-zinc-500 hover:text-zinc-50 transition-colors p-1"
+          aria-label="Close checkout"
+        >
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M18 6L6 18M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- 2-column body -->
+    <div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 min-h-[calc(100vh-56px)]">
+
+      <!-- ── Left column: Order summary ── -->
+      <div class="bg-zinc-900/60 px-8 lg:px-12 py-12 border-r border-zinc-800 order-2 lg:order-1">
+        <p class="text-zinc-500 text-xs font-semibold tracking-[0.2em] uppercase mb-6">Order Summary</p>
+
+        <!-- Items list — rendered by renderCheckoutSummary() -->
+        <div id="checkout-summary-items" class="space-y-1 mb-6"></div>
+
+        <!-- Totals -->
+        <div class="border-t border-zinc-800 pt-4 space-y-2">
+          <div class="flex justify-between text-sm">
+            <span class="text-zinc-500">Subtotal</span>
+            <span id="checkout-summary-subtotal" class="text-zinc-300 tabular-nums"></span>
+          </div>
+          <div class="flex justify-between text-sm">
+            <span class="text-zinc-500">Shipping</span>
+            <span class="text-zinc-300">Free</span>
+          </div>
+          <div class="flex justify-between font-bold pt-2 border-t border-zinc-800">
+            <span class="text-zinc-50">Total</span>
+            <span id="checkout-summary-total" class="text-amber-400 text-xl tabular-nums"></span>
+          </div>
+        </div>
+
+        <!-- Guarantee note -->
+        <div class="mt-8 p-4 bg-zinc-800/40 border border-zinc-700/50">
+          <p class="text-zinc-400 text-xs leading-relaxed">
+            <span class="text-zinc-200 font-medium">Lambda Guarantee:</span>
+            Free returns within 30 days. 2-year warranty on all hardware.
+            If anything breaks, we fix it or replace it — no questions.
+          </p>
+        </div>
+      </div>
+
+      <!-- ── Right column: Checkout form ── -->
+      <div class="px-8 lg:px-12 py-12 order-1 lg:order-2" id="checkout-form-area">
+
+        <p class="text-zinc-500 text-xs font-semibold tracking-[0.2em] uppercase mb-8">Your Details</p>
+
+        <!-- Error message (hidden by default) -->
+        <p
+          id="checkout-error"
+          class="hidden mb-6 text-red-400 text-sm bg-red-400/10 border border-red-400/20 px-4 py-3 rounded-sm"
+          role="alert"
+        ></p>
+
+        <form id="checkout-form" class="space-y-5" novalidate>
+
+          <div>
+            <label for="field-name" class="block text-zinc-400 text-xs font-semibold tracking-[0.15em] uppercase mb-2">
+              Full Name
+            </label>
+            <input
+              type="text"
+              id="field-name"
+              name="name"
+              required
+              autocomplete="name"
+              placeholder="Aritra Biswas"
+              class="w-full bg-zinc-900 border border-zinc-700 text-zinc-50 px-4 py-3.5 text-sm placeholder:text-zinc-700 focus:border-amber-400 focus:outline-none transition-colors"
+            />
+          </div>
+
+          <div>
+            <label for="field-email" class="block text-zinc-400 text-xs font-semibold tracking-[0.15em] uppercase mb-2">
+              Email Address
+            </label>
+            <input
+              type="email"
+              id="field-email"
+              name="email"
+              required
+              autocomplete="email"
+              placeholder="aritra@lambda.dev"
+              class="w-full bg-zinc-900 border border-zinc-700 text-zinc-50 px-4 py-3.5 text-sm placeholder:text-zinc-700 focus:border-amber-400 focus:outline-none transition-colors"
+            />
+          </div>
+
+          <div>
+            <label for="field-address" class="block text-zinc-400 text-xs font-semibold tracking-[0.15em] uppercase mb-2">
+              Delivery Address
+            </label>
+            <textarea
+              id="field-address"
+              name="address"
+              required
+              autocomplete="street-address"
+              placeholder="42 Sector V, Salt Lake&#10;Kolkata 700 091&#10;West Bengal, India"
+              rows="3"
+              class="w-full bg-zinc-900 border border-zinc-700 text-zinc-50 px-4 py-3.5 text-sm placeholder:text-zinc-700 focus:border-amber-400 focus:outline-none transition-colors resize-none"
+            ></textarea>
+          </div>
+
+          <!-- Payment: demo placeholder -->
+          <div class="border-t border-zinc-800 pt-5">
+            <p class="text-zinc-500 text-xs font-semibold tracking-[0.15em] uppercase mb-4">Payment</p>
+            <div class="bg-zinc-900 border border-zinc-700 px-4 py-3.5 flex items-center gap-3">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="text-zinc-600 flex-shrink-0" aria-hidden="true">
+                <rect x="1" y="4" width="22" height="16" rx="2" ry="2"/>
+                <line x1="1" y1="10" x2="23" y2="10"/>
+              </svg>
+              <span class="text-zinc-600 text-sm tracking-widest">•••• •••• •••• 4242</span>
+              <span class="ml-auto text-zinc-700 text-xs font-medium">Demo — no charge</span>
+            </div>
+          </div>
+
+          <!-- Submit -->
+          <div class="pt-2">
+            <button
+              type="submit"
+              class="w-full bg-amber-400 text-zinc-950 font-semibold py-4 hover:bg-amber-300 transition-colors text-sm flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed"
+            >
+              Place Order
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
+            </button>
+            <p class="text-zinc-700 text-xs text-center mt-3">
+              By placing your order you agree to our
+              <a href="#" class="text-zinc-500 hover:text-zinc-300 underline underline-offset-2">Terms</a>
+              and
+              <a href="#" class="text-zinc-500 hover:text-zinc-300 underline underline-offset-2">Privacy Policy</a>.
+            </p>
+          </div>
+
+        </form>
+      </div><!-- /checkout-form-area -->
+
+    </div><!-- /2-col grid -->
+  </div><!-- /checkout-modal -->
+
+
+  <script src="app.js"></script>
+</body>
+</html>
+

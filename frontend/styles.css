@@ -1,0 +1,122 @@
+/* ═══════════════════════════════════════════════════
+   Lambda — Custom Styles
+   Thin supplement to Tailwind CSS. Handles:
+     • Cart drawer slide animation
+     • Cart overlay fade
+     • Skeleton shimmer
+     • Custom scrollbar
+     • Product card hover
+     • Success state fade-in
+     • Focus ring using amber accent
+   ═══════════════════════════════════════════════════ */
+
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  background: #18181b; /* zinc-900 */
+}
+::-webkit-scrollbar-thumb {
+  background: #3f3f46; /* zinc-700 */
+  border-radius: 2px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #52525b; /* zinc-600 */
+}
+
+
+/* ── Focus ring: amber accent, not browser default ── */
+:focus-visible {
+  outline: 2px solid #fbbf24; /* amber-400 */
+  outline-offset: 2px;
+}
+
+
+/* ── Cart drawer: slides in/out from the right ── */
+#cart-drawer {
+  transform: translateX(100%);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+#cart-drawer.is-open {
+  transform: translateX(0);
+}
+
+
+/* ── Cart overlay: fades in/out ── */
+#cart-overlay {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+#cart-overlay.is-visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+
+/* ── Skeleton shimmer loading animation ── */
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position:  200% 0; }
+}
+
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    #27272a 25%,   /* zinc-800 */
+    #3f3f46 50%,   /* zinc-700 */
+    #27272a 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.6s infinite linear;
+}
+
+
+/* ── Product card: subtle lift on hover ── */
+.product-card {
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+.product-card:hover {
+  transform: translateY(-3px);
+  border-color: #52525b; /* zinc-600 */
+}
+
+
+/* ── Checkout success: fade + slide up ── */
+@keyframes successIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+#checkout-success {
+  animation: successIn 0.4s ease forwards;
+}
+
+
+/* ── "Added" button flash ── */
+@keyframes flashPulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.8; }
+}
+
+.btn-flash {
+  animation: flashPulse 0.3s ease;
+}
+
+
+/* ── Line-clamp utility (for small card descriptions) ── */
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
