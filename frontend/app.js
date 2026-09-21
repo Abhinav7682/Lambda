@@ -31,56 +31,56 @@ const MOCK_PRODUCTS = [
     id: 1,
     name: 'Keychron Q1 Pro',
     description: 'Gasket-mounted 75% mechanical keyboard. QMK/VIA support. Sandblasted aluminium housing with a satisfying thock.',
-    price: 199.00,
+    price: 15900,
     stock_quantity: 14,
   },
   {
     id: 2,
     name: 'Logitech MX Master 3S',
     description: 'Electromagnetic scroll wheel. 8,000 DPI optical sensor. Virtually silent clicks for open offices.',
-    price: 99.99,
+    price: 7999,
     stock_quantity: 31,
   },
   {
     id: 3,
     name: 'LG 27UK850-W 4K Monitor',
     description: '27-inch IPS. USB-C 60W PD. Out-of-box DeltaE < 2 colour accuracy. HDR10 with Nano IPS coating.',
-    price: 449.00,
+    price: 35900,
     stock_quantity: 7,
   },
   {
     id: 4,
     name: 'Elgato Stream Deck MK.2',
     description: '15 customisable LCD keys. Drag-and-drop macro builder. Works on macOS and Windows without a driver reboot.',
-    price: 149.99,
+    price: 11900,
     stock_quantity: 22,
   },
   {
     id: 5,
     name: 'Rode PodMic USB',
     description: 'Dynamic broadcast microphone. Internal pop filter. Dual USB-C and XLR — records flat, sounds warm.',
-    price: 129.00,
+    price: 10300,
     stock_quantity: 18,
   },
   {
     id: 6,
     name: 'Anker PowerConf S330',
     description: 'USB speakerphone. 4-mic array with bidirectional noise cancellation. Full 360° voice pickup radius.',
-    price: 59.99,
+    price: 4799,
     stock_quantity: 40,
   },
   {
     id: 7,
     name: 'CalDigit TS4 Thunderbolt Hub',
     description: '18 ports. Thunderbolt 4. 98W host charging. One cable to your MacBook or PC, zero desk cable chaos.',
-    price: 379.95,
+    price: 30300,
     stock_quantity: 9,
   },
   {
     id: 8,
     name: 'Peak Design Laptop Bag 13L',
     description: 'Full-grain leather trim. Magnetic FlexFold dividers. Recycled 400D nylon shell. Fits a 16" MacBook with room.',
-    price: 279.95,
+    price: 22300,
     stock_quantity: 5,
   },
 ];
@@ -388,10 +388,10 @@ function buildSmallCard(product) {
           <span class="text-amber-400 font-bold text-lg tabular-nums">${formatPrice(product.price)}</span>
           <button
             data-add-to-cart="${product.id}"
-            class="text-zinc-400 hover:text-amber-400 text-sm font-medium transition-colors underline underline-offset-4 disabled:opacity-40 disabled:cursor-not-allowed disabled:no-underline"
+            class="bg-zinc-50 text-zinc-950 font-semibold text-sm px-6 py-3 hover:bg-amber-400 transition-colors flex-shrink-0 disabled:opacity-40 disabled:cursor-not-allowed"
             ${outOfStock ? 'disabled' : ''}
           >
-            ${outOfStock ? 'Out of stock' : '+ Add'}
+            ${outOfStock ? 'Out of stock' : 'Add to cart'}
           </button>
         </div>
       </div>
@@ -648,11 +648,14 @@ function closeCheckout() {
 function renderCheckoutSummary() {
   const container = $('#checkout-summary-items');
   const subtotalEl = $('#checkout-summary-subtotal');
+  const shippingEl = $('#checkout-summary-shipping');
   const totalEl = $('#checkout-summary-total');
   if (!container) return;
 
   const items = CartStore.getItems();
-  const total = CartStore.getTotal();
+  const subtotal = CartStore.getTotal();
+  const shipping = subtotal >= 15000 ? 0 : 500;
+  const total = subtotal + shipping;
 
   container.innerHTML = items.map((item) => `
     <div class="flex items-center gap-4 py-3 border-b border-zinc-800 last:border-0">
@@ -672,7 +675,8 @@ function renderCheckoutSummary() {
     </div>
   `).join('');
 
-  if (subtotalEl) subtotalEl.textContent = formatPrice(total);
+  if (subtotalEl) subtotalEl.textContent = formatPrice(subtotal);
+  if (shippingEl) shippingEl.textContent = shipping === 0 ? 'Free' : formatPrice(shipping);
   if (totalEl) totalEl.textContent = formatPrice(total);
 }
 
@@ -773,13 +777,16 @@ async function handleCheckoutSubmit(e) {
     Processing…`;
   submitBtn.disabled = true;
 
+  const subtotal = CartStore.getTotal();
+  const shipping = subtotal >= 15000 ? 0 : 500;
+
   const payload = {
     customer: { name, email, address },
     items: CartStore.getItems().map((i) => ({
       product_id: i.id,
       quantity: i.quantity,
     })),
-    total: CartStore.getTotal(),
+    total: subtotal + shipping,
   };
 
   try {
