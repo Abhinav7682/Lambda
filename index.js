@@ -11,6 +11,7 @@ const PORT = process.env.PORT || 3000;
 // Middleware
 app.use(cors());
 app.use(express.json());
+app.use(express.static('frontend')); // Serve static frontend files
 
 // Database connection
 const dbPath = path.resolve(__dirname, 'ecommerce.db');

@@ -19,7 +19,7 @@
   },
   "homepage": "https://github.com/Abhinav7682/Lambda#readme",
   "dependencies": {
-    "better-sqlite3": "^13.0.3",
+    "better-sqlite3": "^11.0.0",
     "cors": "^2.8.6",
     "dotenv": "^18.0.1",
     "express": "^5.2.1"
