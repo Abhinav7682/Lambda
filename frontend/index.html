@@ -430,6 +430,10 @@
   </div><!-- /checkout-modal -->
 
 
+  <!-- Environment config: sets window.APP_CONFIG (API URL + mock flag).
+       Local dev  → config.js (this file, git-ignored).
+       Production → copy config.prod.js to config.js on the EC2 instance. -->
+  <script src="config.js"></script>
   <script src="app.js"></script>
 </body>
 </html>
