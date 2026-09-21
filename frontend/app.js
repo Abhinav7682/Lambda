@@ -231,11 +231,10 @@ function formatPrice(amount) {
 }
 
 /**
- * Returns a consistent placeholder image URL for a product ID.
- * Replace with real product images once available.
+ * Returns the local product image URL for a product ID.
  */
 function getProductImage(id) {
-  return `https://picsum.photos/seed/lambda-prod-${id}/600/800`;
+  return `/images/${id}.jpg`;
 }
 
 
