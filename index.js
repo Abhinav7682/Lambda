@@ -1,0 +1,87 @@
+const express = require('express');
+const cors = require('cors');
+const Database = require('better-sqlite3');
+const path = require('path');
+
+const app = express();
+const PORT = process.env.PORT || 3000;
+
+// Middleware
+app.use(cors());
+app.use(express.json());
+
+// Database connection
+const dbPath = path.resolve(__dirname, 'ecommerce.db');
+const db = new Database(dbPath);
+
+// API Routes
+
+// 1. Get all products
+app.get('/api/products', (req, res) => {
+    try {
+        const products = db.prepare('SELECT * FROM products').all();
+        res.json(products);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
+// 2. Get single product details
+app.get('/api/products/:id', (req, res) => {
+    try {
+        const product = db.prepare('SELECT * FROM products WHERE id = ?').get(req.params.id);
+        if (product) {
+            res.json(product);
+        } else {
+            res.status(404).json({ error: 'Product not found' });
+        }
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
+// 3. Checkout process
+app.post('/api/checkout', (req, res) => {
+    const { cart } = req.body; // Expects JSON like: { cart: [{ id: 1, quantity: 2 }, ...] }
+    
+    if (!cart || !Array.isArray(cart) || cart.length === 0) {
+        return res.status(400).json({ error: 'Invalid or empty cart data' });
+    }
+
+    try {
+        const checkStock = db.prepare('SELECT name, stock_quantity FROM products WHERE id = ?');
+        const updateStock = db.prepare('UPDATE products SET stock_quantity = stock_quantity - ? WHERE id = ?');
+
+        // Use a transaction to ensure all stock updates happen safely
+        const processCheckout = db.transaction((cartItems) => {
+            for (const item of cartItems) {
+                const product = checkStock.get(item.id);
+                
+                if (!product) {
+                    throw new Error(`Product with ID ${item.id} not found.`);
+                }
+                
+                if (product.stock_quantity < item.quantity) {
+                    throw new Error(`Insufficient stock for "${product.name}". Only ${product.stock_quantity} left.`);
+                }
+                
+                // Deduct stock
+                updateStock.run(item.quantity, item.id);
+            }
+        });
+
+        // Execute transaction
+        processCheckout(cart);
+        
+        res.json({ success: true, message: 'Checkout successful! Stock has been updated.' });
+    } catch (err) {
+        res.status(400).json({ success: false, error: err.message });
+    }
+});
+
+// Start the server
+app.listen(PORT, () => {
+    console.log(`E-Commerce API is running on http://localhost:${PORT}`);
+});
