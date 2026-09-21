@@ -1,1 +1,9 @@
 node_modules/
+
+# Environment variables — never commit secrets
+.env
+
+# Frontend environment config — environment-specific, generated per machine
+# Local dev: frontend/config.js  (localhost:3000)
+# Production: copy frontend/config.prod.js → frontend/config.js on EC2
+frontend/config.js

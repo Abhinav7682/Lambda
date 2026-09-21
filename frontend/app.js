@@ -2,12 +2,22 @@
 
 // ═══════════════════════════════════════════════════════
 // CONFIG
-// Flip MOCK_MODE to false once the backend is live at
-// http://localhost:3000
+// Values are injected by frontend/config.js (loaded BEFORE
+// this script in index.html). That file sets window.APP_CONFIG
+// with the correct API_BASE_URL and MOCK_MODE for each env:
+//
+//   Local dev  → frontend/config.js      (API = localhost:3000)
+//   Production → frontend/config.prod.js → copied to config.js
+//                on the EC2 instance     (API = public EC2 IP)
+//
+// The fallback here is intentionally safe: mock mode on,
+// so the UI never breaks if config.js is missing.
 // ═══════════════════════════════════════════════════════
 const CONFIG = {
-  API_BASE_URL: 'http://localhost:3000',
-  MOCK_MODE: true, // ← set to false when backend is ready
+  API_BASE_URL: (window.APP_CONFIG && window.APP_CONFIG.API_BASE_URL) || 'http://localhost:3000',
+  MOCK_MODE:    (window.APP_CONFIG && window.APP_CONFIG.MOCK_MODE    !== undefined)
+                  ? window.APP_CONFIG.MOCK_MODE
+                  : true, // safe fallback: never call a missing backend
 };
 
 
