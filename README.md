@@ -24,8 +24,7 @@
 - [Database Schema & Seed Data](#-database-schema--seed-data)
 - [Local Development Setup](#-local-development-setup)
 - [AWS Cloud Deployment Guide](#-aws-cloud-deployment-guide)
-- [Team Roles & Execution Matrix](#-team-roles--execution-matrix)
-- [Environment Configuration](#-environment-configuration)
+- [Reliability & Security Measures](#-reliability--security-measures)
 - [License](#-license)
 
 ---
@@ -426,37 +425,6 @@ curl -I http://localhost
 ```
 You should receive an `HTTP/1.1 200 OK` response. You can now visit `http://<YOUR_ELASTIC_IP>` directly from any web browser!
 
----
-
-## 👥 Team Roles & Execution Matrix
-
-From [`TEAM_ROLES.md`](file:///c:/Users/Shobit/Lambda/TEAM_ROLES.md) and project contributions:
-
-```
-┌─────────────────────────────────┬────────────────────────────────────────────────────────┐
-│ Role                            │ Core Responsibilities & Deliverables                   │
-├─────────────────────────────────┼────────────────────────────────────────────────────────┤
-│ 1. AWS & Cloud Infrastructure   │ • EC2 t3.micro provisioning (Amazon Linux 2023)        │
-│    Lead                         │ • Security Group configuration (Ports 80 & 22)         │
-│                                 │ • Elastic IP allocation & Nginx reverse proxy block    │
-│                                 │ • PM2 / systemd background service & restart policies  │
-├─────────────────────────────────┼────────────────────────────────────────────────────────┤
-│ 2. Backend Developer            │ • Node.js / Express 5 architecture & middleware        │
-│                                 │ • SQLite schema design (`ecommerce.db`) via better-sqlite3│
-│                                 │ • Database seeding script (`init_db.js`)               │
-│                                 │ • REST API routes & atomic transaction checkout logic  │
-├─────────────────────────────────┼────────────────────────────────────────────────────────┤
-│ 3. Frontend Developer           │ • High-agency UI implementation via Tailwind CSS       │
-│                                 │ • Responsive 50/50 hero split & asymmetric masonry     │
-│                                 │ • CartStore state management (`localStorage`)          │
-│                                 │ • Slide-in cart drawer & full checkout modal workflow  │
-├─────────────────────────────────┼────────────────────────────────────────────────────────┤
-│ 4. Full Stack Integrator        │ • Dynamic `/config.js` environment injection route     │
-│                                 │ • CORS configuration & error status standardizations   │
-│                                 │ • Git branch management & pull request merges          │
-│                                 │ • Production deployment execution & End-to-End QA      │
-└─────────────────────────────────┴────────────────────────────────────────────────────────┘
-```
 
 ---
 
