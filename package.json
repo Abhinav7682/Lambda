@@ -1,9 +1,11 @@
 {
   "name": "lambda",
   "version": "1.0.0",
-  "description": "",
+  "description": "Curated precision hardware e-commerce platform built with Node.js, Express, SQLite, and Tailwind CSS.",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
+    "init-db": "node init_db.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
